@@ -16,8 +16,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.delegate = self
-        tableView.dataSource = self
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
 
         // Do any additional setup after loading the view.
     }
@@ -27,6 +27,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             self.posts = posts!
             self.tableView.reloadData()
         })
+        self.tableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
