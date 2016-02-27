@@ -7,15 +7,24 @@
 //
 
 import UIKit
+import Parse
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    let storyboard = UIStoryboard(name: "Main", bundle: nil)
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        Parse.initializeWithConfiguration(
+            ParseClientConfiguration(block:
+                { (configuration:ParseMutableClientConfiguration) -> Void in
+                    configuration.applicationId = "InstaPhotos"
+                    configuration.clientKey = "Ie/rja90suf032oqjrra4fli350xkvj93"
+                    configuration.server = "https://agile-fjord-31182.herokuapp.com/parse"
+            }))
         return true
     }
 
