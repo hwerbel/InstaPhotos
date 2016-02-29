@@ -11,12 +11,14 @@ import Parse
 
 class LoginViewController: UIViewController {
 
+    @IBOutlet weak var logoView: UIView!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var userNameField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        logoView.layer.cornerRadius = 5
+        logoView.clipsToBounds = true
         // Do any additional setup after loading the view.
     }
 
@@ -42,6 +44,7 @@ class LoginViewController: UIViewController {
         newUser.signUpInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
             if (success) {
                 print("user created")
+                self.performSegueWithIdentifier("toHome", sender: nil)
             } else {
                 print(error?.localizedDescription)
                 if error!.code == 202 {

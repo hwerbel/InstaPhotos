@@ -31,6 +31,7 @@ class PhotosViewController: UIViewController, UIImagePickerControllerDelegate, U
         //Keyboard
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardIsShowing:"), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
+        
         // Do any additional setup after loading the view.
     }
 
@@ -79,6 +80,7 @@ class PhotosViewController: UIViewController, UIImagePickerControllerDelegate, U
         UIView.animateWithDuration(0.1, animations: { () -> Void in
             self.captionViewBottomConstraint.constant = 63
         })
+        self.view.alpha = 1.0
         doneButton.hidden = true
     }
     

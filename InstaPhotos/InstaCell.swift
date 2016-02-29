@@ -10,15 +10,21 @@ import UIKit
 import Parse
 import ParseUI
 
+protocol profileTapDelegate: class {
+    func didTapProfile(user: PFUser?)
+}
+
 class InstaCell: UITableViewCell {
     @IBOutlet weak var captionLabel: UILabel!
     @IBOutlet weak var photoImageView: PFImageView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var createdAtLabel: UILabel!
     @IBOutlet weak var profileImageView: PFImageView!
-
-
-
+    @IBOutlet weak var profileView: UIView!
+    let profileTap = UITapGestureRecognizer()
+    weak var delegate: profileTapDelegate?
+    var user: PFUser?
+    
     var post: PFObject! {
         didSet {
             self.captionLabel.text = post["caption"] as? String
@@ -26,7 +32,7 @@ class InstaCell: UITableViewCell {
             self.photoImageView.loadInBackground()
             self.usernameLabel.text = post["username"] as? String
             
-            let user = post["author"] as? PFUser
+            user = post["author"] as? PFUser
             if let imageFile = user!["profilePic"] as? PFFile {
                 self.profileImageView.file = imageFile
                 self.profileImageView.loadInBackground()
@@ -49,6 +55,11 @@ class InstaCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         
+        //Tap Gesture Recognizer
+        profileTap.addTarget(self, action: Selector("onProfileTap:"))
+        profileView.addGestureRecognizer(profileTap)
+        profileView.userInteractionEnabled = true
+
         //captionLabel.preferredMaxLayoutWidth = captionLabel.frame.size.width
     }
 
@@ -56,6 +67,12 @@ class InstaCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    
+    func onProfileTap(recognizer: UITapGestureRecognizer) {
+        print("tapped")
+        self.delegate?.didTapProfile(user)
     }
 
 }

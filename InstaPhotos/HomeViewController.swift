@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate{
+class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, profileTapDelegate{
 
     @IBOutlet weak var tableView: UITableView!
     var posts: [PFObject]?
@@ -22,6 +22,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 300
         
+        let tbvc = self.tabBarController! as! tabBarViewController
+        tbvc.profileUser = nil
         // Do any additional setup after loading the view.
     }
     
@@ -50,16 +52,19 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.post = posts![indexPath.row]
         
         let cell = tableView.dequeueReusableCellWithIdentifier("InstaCell", forIndexPath: indexPath) as! InstaCell
+        cell.delegate = self
         cell.post = posts![indexPath.row]
+        cell.selectionStyle = .None
         return cell
     }
     
-    @IBAction func onLogout(sender: AnyObject) {
-        PFUser.logOut()
-        print(PFUser.currentUser())
-        NSNotificationCenter.defaultCenter().postNotificationName("userDidLogoutNotification", object: nil)
-    }
     
+    func didTapProfile(user: PFUser?) {
+        let tbvc = self.tabBarController as! tabBarViewController
+        tbvc.profileUser = user
+        self.tabBarController!.selectedIndex = 2
+        
+    }
 
     /*
     // MARK: - Navigation

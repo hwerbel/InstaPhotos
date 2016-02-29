@@ -19,6 +19,7 @@
 		298AB4FC1C7D507A008FFA1E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 298AB4FA1C7D507A008FFA1E /* Main.storyboard */; };
 		298AB4FE1C7D507A008FFA1E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 298AB4FD1C7D507A008FFA1E /* Assets.xcassets */; };
 		298AB5011C7D507A008FFA1E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 298AB4FF1C7D507A008FFA1E /* LaunchScreen.storyboard */; };
+		88BAE0521C84FB5700FEE4AB /* tabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BAE0511C84FB5700FEE4AB /* tabBarViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		298AB4FD1C7D507A008FFA1E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		298AB5001C7D507A008FFA1E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		298AB5021C7D507A008FFA1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		88BAE0511C84FB5700FEE4AB /* tabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = tabBarViewController.swift; sourceTree = "<group>"; };
 		98BBB956DFA8A78F16C708DD /* Pods_InstaPhotos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstaPhotos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C36970C501C05CC0EF8235FB /* Pods-InstaPhotos.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstaPhotos.release.xcconfig"; path = "Pods/Target Support Files/Pods-InstaPhotos/Pods-InstaPhotos.release.xcconfig"; sourceTree = "<group>"; };
 		C4947DA844A1F2A0681EC24B /* Pods-InstaPhotos.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstaPhotos.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InstaPhotos/Pods-InstaPhotos.debug.xcconfig"; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 				296DDE581C8179B1002A37FF /* HomeViewController.swift */,
 				296DDE5A1C817B90002A37FF /* PhotosViewController.swift */,
 				295A78DC1C83E0440055D1D3 /* ProfileViewController.swift */,
+				88BAE0511C84FB5700FEE4AB /* tabBarViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -258,6 +261,7 @@
 				296DDE561C817463002A37FF /* StartViewController.swift in Sources */,
 				296DDE591C8179B1002A37FF /* HomeViewController.swift in Sources */,
 				296DDE5B1C817B90002A37FF /* PhotosViewController.swift in Sources */,
+				88BAE0521C84FB5700FEE4AB /* tabBarViewController.swift in Sources */,
 				295A78DD1C83E0440055D1D3 /* ProfileViewController.swift in Sources */,
 				296DDE611C8199FE002A37FF /* InstaCell.swift in Sources */,
 			);

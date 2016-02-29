@@ -25,6 +25,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let tbvc = self.tabBarController! as! tabBarViewController
+        profileUser = tbvc.profileUser
         if profileUser != nil {
             user = profileUser
             if profileUser != currentUser {
@@ -98,7 +100,11 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         return newImage
     }
     
-
+    @IBAction func onLogout(sender: AnyObject) {
+        PFUser.logOut()
+        print(PFUser.currentUser())
+        NSNotificationCenter.defaultCenter().postNotificationName("userDidLogoutNotification", object: nil)
+    }
     /*
     // MARK: - Navigation
 
