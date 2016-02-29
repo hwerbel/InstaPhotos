@@ -25,7 +25,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     configuration.clientKey = "Ie/rja90suf032oqjrra4fli350xkvj93"
                     configuration.server = "https://agile-fjord-31182.herokuapp.com/parse"
             }))
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userDidLogout", name: "userDidLogoutNotification", object: nil)
         return true
+    }
+    
+    func userDidLogout() {
+        let vc = storyboard.instantiateInitialViewController() as UIViewController!
+        window?.rootViewController = vc
     }
 
     func applicationWillResignActive(application: UIApplication) {

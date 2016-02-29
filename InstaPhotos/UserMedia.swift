@@ -11,10 +11,31 @@ import Parse
 
 class UserMedia: NSObject {
     
+    class func postProfileImage(image: UIImage?) {
+        let user = PFUser.currentUser()!
+        user["profilePic"] = getPFFileFromImage(image)
+        
+        user.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+            if (success) {
+                print("successfully updated profile image")
+            } else {
+                print("did not update profile image")
+            }
+            NSNotificationCenter.defaultCenter().postNotificationName("EndProfileUpload", object: nil)
+        }
+    }
+    
     class func postUserImage(image: UIImage?, caption: String?) {
         let media = PFObject(className: "userMedia")
         media["media"] = getPFFileFromImage(image)
         media["author"] = PFUser.currentUser()
+        media["username"] = PFUser.currentUser()!.username
+        /*let profilePic = PFUser.currentUser()!.objectForKey("profilePic")
+        if profilePic != nil {
+            media["profilePic"] = profilePic
+        } else {
+            media["profilePic"] = NSNull()
+        } */
         media["caption"] = caption
         media["likesCount"] = 0
         media["commentsCount"] = 0
@@ -25,6 +46,7 @@ class UserMedia: NSObject {
             } else {
                 print("did not save image")
             }
+            NSNotificationCenter.defaultCenter().postNotificationName("EndUpload", object: nil)
         }
     }
     
@@ -43,16 +65,17 @@ class UserMedia: NSObject {
         var query: PFQuery
         if predicate != nil {
             let predicate = NSPredicate(format: predicate!)
-            query = PFQuery(className: "UserMedia", predicate: predicate)
+            query = PFQuery(className: "userMedia", predicate: predicate)
         } else {
-            query = PFQuery(className: "UserMedia")
+            query = PFQuery(className: "userMedia")
         }
+        query.includeKey("author")
         query.orderByDescending("_created_at")
         
         query.findObjectsInBackgroundWithBlock{ (media: [PFObject]?, error: NSError?) -> Void in
             if let media = media {
                 completion(posts: media, error: nil)
-                print(media)
+                
                 print("got media")
             } else {
                 completion(posts: nil, error: error)

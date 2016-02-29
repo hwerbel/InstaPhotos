@@ -7,9 +7,13 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class PhotosViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate {
 
+    @IBOutlet weak var captionViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var doneButton: UIButton!
+    @IBOutlet weak var captionView: UIView!
     @IBOutlet weak var captionLabel: UILabel!
     @IBOutlet weak var captionTextView: UITextView!
     @IBOutlet weak var uploadLabel: UILabel!
@@ -20,21 +24,62 @@ class PhotosViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        previewImageView.image = nil
-        previewImageView.hidden = true
-        uploadView.alpha = 0.8
-        captionTextView.delegate = self
+        initialView()
+        //Progress HUD
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("didSaveImage:"), name: "EndUpload", object: nil)
         
-        //Tap Gesture Recognizer
-        uploadTap.addTarget(self, action: Selector("onUploadTap:"))
-        uploadView.addGestureRecognizer(uploadTap)
-        uploadView.userInteractionEnabled = true
+        //Keyboard
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardIsShowing:"), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
         // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func initialView() {
+        previewImageView.image = nil
+        previewImageView.hidden = true
+        uploadView.alpha = 0.8
+        doneButton.hidden = true
+        uploadLabel.hidden = false
+        captionTextView.delegate = self
+        captionTextView.text = ""
+        captionLabel.hidden = false
+        
+        //Tap Gesture Recognizer
+        uploadTap.addTarget(self, action: Selector("onUploadTap:"))
+        uploadView.addGestureRecognizer(uploadTap)
+        uploadView.userInteractionEnabled = true
+    }
+    
+    func textViewDidChange(textView: UITextView) {
+        let charCount = textView.text.characters.count
+        if charCount > 0 {
+            self.captionLabel.hidden = true
+        } else {
+            self.captionLabel.hidden = false
+        }
+    }
+
+    func keyboardIsShowing(notification: NSNotification) {
+        var keyboardInfo = notification.userInfo!
+        let keyboardFrame: CGRect = (keyboardInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+        
+        UIView.animateWithDuration(0.1, animations: { () -> Void in
+            self.captionViewBottomConstraint.constant = keyboardFrame.size.height - 50
+        })
+        self.view.alpha = 0.7
+        doneButton.hidden = false
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        UIView.animateWithDuration(0.1, animations: { () -> Void in
+            self.captionViewBottomConstraint.constant = 63
+        })
+        doneButton.hidden = true
     }
     
     func onUploadTap(recognizer: UITapGestureRecognizer) {
@@ -56,7 +101,6 @@ class PhotosViewController: UIViewController, UIImagePickerControllerDelegate, U
             self.previewImageView.hidden = false
             self.uploadLabel.hidden = true
             self.uploadView.alpha = 1
-            self.uploadView.backgroundColor = UIColor.whiteColor()
             self.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -72,17 +116,21 @@ class PhotosViewController: UIViewController, UIImagePickerControllerDelegate, U
         return newImage
     }
     
-    func textViewDidChange(textView: UITextView) {
-        let charCount = textView.text.characters.count
-        if charCount > 0 {
-            uploadLabel.hidden = true
-        } else {
-            uploadLabel.hidden = false
-        }
+    @IBAction func onDone(sender: AnyObject) {
+        self.captionTextView.endEditing(true)
     }
     
     @IBAction func onSubmit(sender: AnyObject) {
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        hud.labelText = "Loading Image"
         UserMedia.postUserImage(self.imageToUpload!, caption: captionTextView.text!)
+    }
+    
+    func didSaveImage(notification: NSNotification) {
+        MBProgressHUD.hideHUDForView(self.view, animated: true)
+        initialView()
+        self.tabBarController!.selectedIndex = 0
+        
     }
 
     /*

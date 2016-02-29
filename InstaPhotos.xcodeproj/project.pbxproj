@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		23386D5519FF61D479B1AF35 /* Pods_InstaPhotos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98BBB956DFA8A78F16C708DD /* Pods_InstaPhotos.framework */; };
+		295A78DD1C83E0440055D1D3 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295A78DC1C83E0440055D1D3 /* ProfileViewController.swift */; };
 		296DDE541C816D0D002A37FF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296DDE531C816D0D002A37FF /* LoginViewController.swift */; };
 		296DDE561C817463002A37FF /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296DDE551C817463002A37FF /* StartViewController.swift */; };
 		296DDE591C8179B1002A37FF /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296DDE581C8179B1002A37FF /* HomeViewController.swift */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		295A78DC1C83E0440055D1D3 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		296DDE531C816D0D002A37FF /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		296DDE551C817463002A37FF /* StartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		296DDE581C8179B1002A37FF /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -66,6 +68,7 @@
 				296DDE551C817463002A37FF /* StartViewController.swift */,
 				296DDE581C8179B1002A37FF /* HomeViewController.swift */,
 				296DDE5A1C817B90002A37FF /* PhotosViewController.swift */,
+				295A78DC1C83E0440055D1D3 /* ProfileViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -255,6 +258,7 @@
 				296DDE561C817463002A37FF /* StartViewController.swift in Sources */,
 				296DDE591C8179B1002A37FF /* HomeViewController.swift in Sources */,
 				296DDE5B1C817B90002A37FF /* PhotosViewController.swift in Sources */,
+				295A78DD1C83E0440055D1D3 /* ProfileViewController.swift in Sources */,
 				296DDE611C8199FE002A37FF /* InstaCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

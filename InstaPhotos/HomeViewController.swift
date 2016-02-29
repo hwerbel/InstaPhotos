@@ -13,12 +13,15 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
     @IBOutlet weak var tableView: UITableView!
     var posts: [PFObject]?
+    var post: PFObject?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.delegate = self
         self.tableView.dataSource = self
-
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 300
+        
         // Do any additional setup after loading the view.
     }
     
@@ -36,7 +39,6 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         if posts != nil {
             return posts!.count
         } else {
@@ -45,13 +47,19 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        self.post = posts![indexPath.row]
         
         let cell = tableView.dequeueReusableCellWithIdentifier("InstaCell", forIndexPath: indexPath) as! InstaCell
-        print(posts!)
         cell.post = posts![indexPath.row]
         return cell
     }
-
+    
+    @IBAction func onLogout(sender: AnyObject) {
+        PFUser.logOut()
+        print(PFUser.currentUser())
+        NSNotificationCenter.defaultCenter().postNotificationName("userDidLogoutNotification", object: nil)
+    }
+    
 
     /*
     // MARK: - Navigation
