@@ -13,6 +13,7 @@ import MBProgressHUD
 
 class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
 
+    @IBOutlet weak var profileView: UIView!
     @IBOutlet weak var logoutButton: UIButton!
     @IBOutlet weak var profileImageView: PFImageView!
     @IBOutlet weak var updateButton: UIButton!
@@ -77,7 +78,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
             self.imageToUpload = resize(image, newSize: CGSizeMake(750, 750))
             self.profileImageView.image = self.imageToUpload
             self.dismissViewControllerAnimated(true, completion: nil)
-            self.view.alpha = 0.7
+            self.profileView.alpha = 0.7
             let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
             hud.labelText = "Updating"
             UserMedia.postProfileImage(self.imageToUpload)
@@ -85,7 +86,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     func didEndUpload(notification: NSNotification) {
         MBProgressHUD.hideHUDForView(self.view, animated: true)
-        self.view.alpha = 1
+        self.profileView.alpha = 1
     }
     
     func resize(image: UIImage, newSize: CGSize) -> UIImage {
