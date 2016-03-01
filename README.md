@@ -43,7 +43,8 @@ Here's a walkthrough of implemented user stories:
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 - I don't know why this isn't showing up. Maybe it's too big. If the link is copyed and pasted into the browser it works.
-- link: <a href = 'http://i.imgur.com/rPa69QC.gif'> Click Here </a>
+- link: <a href = 'http://i.imgur.com/rPa69QC.gif' target = "_blank"> Click Here </a>
+
 ## Notes
 
 Describe any challenges encountered while building the app.
