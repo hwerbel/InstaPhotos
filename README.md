@@ -39,10 +39,10 @@ Please list two areas of the assignment you'd like to **discuss further with you
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/rPa69QC.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/dhSNRNZ.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 I don't know why this isn't showing up. Maybe it's too big. If the link is copyed and pasted into the browser it works.
-- link to Video: <a href = 'http://i.imgur.com/rPa69QC.gif' target = "_blank"> Click Here </a>
+- link to Video: <a href = 'http://i.imgur.com/dhSNRNZ.gif' target = "_blank"> Click Here </a>
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
