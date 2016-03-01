@@ -16,7 +16,24 @@
                     <view key="view" contentMode="scaleToFill" id="7Tv-O9-9Io">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G3a-Xe-2dd">
+                                <rect key="frame" x="10" y="44" width="300" height="224"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="flower" translatesAutoresizingMaskIntoConstraints="NO" id="mSg-An-RHx">
+                                        <rect key="frame" x="8" y="15" width="143" height="147"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="InstaPhotos" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="drr-Vi-knD">
+                                        <rect key="frame" x="46" y="143" width="247" height="48"/>
+                                        <fontDescription key="fontDescription" type="system" weight="black" pointSize="40"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.1542184489" green="0.85353535349999998" blue="0.034310877740000002" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
@@ -68,8 +85,8 @@
                                     <action selector="onSignUp:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="9iU-gP-vrb"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z6y-Ca-T02">
-                                <rect key="frame" x="67" y="111" width="37" height="18"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="User Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z6y-Ca-T02">
+                                <rect key="frame" x="27" y="111" width="77" height="18"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -240,15 +257,40 @@
                                     <constraint firstAttribute="bottom" secondItem="iHR-2F-aOc" secondAttribute="bottom" constant="37" id="sT0-2z-4Cc"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9ls-Qw-6mT">
+                                <rect key="frame" x="21" y="459" width="51" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="J74-Lj-pdL"/>
+                                    <constraint firstAttribute="height" constant="30" id="Vtl-cZ-qja"/>
+                                    <constraint firstAttribute="width" constant="53" id="bRq-PL-SeD"/>
+                                    <constraint firstAttribute="width" constant="51" id="d0w-xf-dMZ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" red="0.62626262629999996" green="0.62626262629999996" blue="0.62626262629999996" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="J74-Lj-pdL"/>
+                                        <exclude reference="bRq-PL-SeD"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <action selector="onCancel:" destination="6a0-a3-44a" eventType="primaryActionTriggered" id="M6X-vT-f67"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="4y3-h3-6N3" secondAttribute="trailing" constant="20" id="6rJ-5I-e6N"/>
+                            <constraint firstItem="9ls-Qw-6mT" firstAttribute="top" secondItem="37Y-9Y-X82" secondAttribute="bottom" constant="3" id="BAd-5v-qEz"/>
                             <constraint firstAttribute="trailing" secondItem="37Y-9Y-X82" secondAttribute="trailing" constant="20" id="JWB-6a-dBI"/>
                             <constraint firstItem="4y3-h3-6N3" firstAttribute="top" secondItem="hcm-UU-072" secondAttribute="bottom" constant="8" id="bm2-3G-UdX"/>
                             <constraint firstItem="hks-Yv-C1w" firstAttribute="top" secondItem="6sR-35-Wh0" secondAttribute="bottom" constant="30" id="fwO-u1-vVy"/>
                             <constraint firstItem="37Y-9Y-X82" firstAttribute="leading" secondItem="r13-QU-BzL" secondAttribute="leading" constant="20" id="hv7-3J-nJi"/>
                             <constraint firstAttribute="trailing" secondItem="6sR-35-Wh0" secondAttribute="trailing" constant="24" id="jMF-Ge-b7u"/>
+                            <constraint firstItem="9ls-Qw-6mT" firstAttribute="leading" secondItem="r13-QU-BzL" secondAttribute="leading" constant="21" id="x2p-KY-Kva"/>
                             <constraint firstItem="hks-Yv-C1w" firstAttribute="top" secondItem="37Y-9Y-X82" secondAttribute="bottom" constant="63" id="zGm-He-HWp"/>
                             <constraint firstItem="4y3-h3-6N3" firstAttribute="leading" secondItem="r13-QU-BzL" secondAttribute="leading" constant="20" id="zTa-Gp-gUD"/>
                         </constraints>
@@ -518,6 +560,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="createdAtLabel" destination="ASX-tc-wia" id="IUd-HD-8BK"/>
+                        <outlet property="logoutButton" destination="35y-AZ-Du1" id="qRf-Pd-Ljy"/>
                         <outlet property="profileImageView" destination="Dvf-IY-3zY" id="7xp-Yy-Lq6"/>
                         <outlet property="updateButton" destination="YVA-cB-zI8" id="AAG-wI-TEL"/>
                         <outlet property="userNameLabel" destination="zQq-OM-HNn" id="Rp4-7M-hOI"/>

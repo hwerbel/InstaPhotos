@@ -71,7 +71,7 @@ class InstaCell: UITableViewCell {
     
     
     func onProfileTap(recognizer: UITapGestureRecognizer) {
-        print("tapped")
+        print("profile view tapped")
         self.delegate?.didTapProfile(user)
     }
 

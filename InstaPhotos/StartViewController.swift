@@ -17,6 +17,7 @@ class StartViewController: UIViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         if PFUser.currentUser() != nil {
             //segue to home screen
             self.performSegueWithIdentifier("toHomeSegue", sender: nil)

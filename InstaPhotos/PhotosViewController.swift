@@ -8,6 +8,7 @@
 
 import UIKit
 import MBProgressHUD
+import Parse
 
 class PhotosViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate {
 
@@ -33,6 +34,11 @@ class PhotosViewController: UIViewController, UIImagePickerControllerDelegate, U
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
         
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        (self.tabBarController! as! tabBarViewController).profileUser = PFUser.currentUser()!
     }
 
     override func didReceiveMemoryWarning() {
@@ -72,7 +78,7 @@ class PhotosViewController: UIViewController, UIImagePickerControllerDelegate, U
         UIView.animateWithDuration(0.1, animations: { () -> Void in
             self.captionViewBottomConstraint.constant = keyboardFrame.size.height - 50
         })
-        self.view.alpha = 0.7
+        self.uploadView.alpha = 0.7
         doneButton.hidden = false
     }
     
@@ -80,7 +86,7 @@ class PhotosViewController: UIViewController, UIImagePickerControllerDelegate, U
         UIView.animateWithDuration(0.1, animations: { () -> Void in
             self.captionViewBottomConstraint.constant = 63
         })
-        self.view.alpha = 1.0
+        self.uploadView.alpha = 1.0
         doneButton.hidden = true
     }
     
@@ -89,7 +95,6 @@ class PhotosViewController: UIViewController, UIImagePickerControllerDelegate, U
         vc.delegate = self
         vc.allowsEditing = true
         vc.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-        uploadView.removeGestureRecognizer(uploadTap)
         
         self.presentViewController(vc, animated: true, completion: nil)
     }
@@ -104,6 +109,7 @@ class PhotosViewController: UIViewController, UIImagePickerControllerDelegate, U
             self.uploadLabel.hidden = true
             self.uploadView.alpha = 1
             self.dismissViewControllerAnimated(true, completion: nil)
+            uploadView.removeGestureRecognizer(uploadTap)
     }
     
     func resize(image: UIImage, newSize: CGSize) -> UIImage {
@@ -126,6 +132,11 @@ class PhotosViewController: UIViewController, UIImagePickerControllerDelegate, U
         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         hud.labelText = "Loading Image"
         UserMedia.postUserImage(self.imageToUpload!, caption: captionTextView.text!)
+    }
+    
+    @IBAction func onCancel(sender: AnyObject) {
+        initialView()
+        self.tabBarController!.selectedIndex = 0
     }
     
     func didSaveImage(notification: NSNotification) {

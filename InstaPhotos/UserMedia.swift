@@ -30,12 +30,6 @@ class UserMedia: NSObject {
         media["media"] = getPFFileFromImage(image)
         media["author"] = PFUser.currentUser()
         media["username"] = PFUser.currentUser()!.username
-        /*let profilePic = PFUser.currentUser()!.objectForKey("profilePic")
-        if profilePic != nil {
-            media["profilePic"] = profilePic
-        } else {
-            media["profilePic"] = NSNull()
-        } */
         media["caption"] = caption
         media["likesCount"] = 0
         media["commentsCount"] = 0
@@ -71,6 +65,7 @@ class UserMedia: NSObject {
         }
         query.includeKey("author")
         query.orderByDescending("_created_at")
+        query.limit = 20
         
         query.findObjectsInBackgroundWithBlock{ (media: [PFObject]?, error: NSError?) -> Void in
             if let media = media {

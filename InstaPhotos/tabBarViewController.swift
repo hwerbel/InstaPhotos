@@ -10,7 +10,7 @@ import UIKit
 import Parse
 
 class tabBarViewController: UITabBarController {
-    var profileUser: PFUser?
+    var profileUser = PFUser()
     
     override func viewDidLoad() {
         super.viewDidLoad()

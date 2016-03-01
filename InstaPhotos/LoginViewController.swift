@@ -14,7 +14,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var logoView: UIView!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var userNameField: UITextField!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         logoView.layer.cornerRadius = 5
@@ -32,6 +32,22 @@ class LoginViewController: UIViewController {
             if user != nil {
                 print("logged in")
                 self.performSegueWithIdentifier("toHome", sender: nil)
+            } else {
+                if error!.code == 101 {
+                    let alertController = UIAlertController(title: "Error", message: "Invalid Username or Password",preferredStyle: .Alert)
+                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel) { (action) in
+                    }
+                    alertController.addAction(cancelAction)
+                    self.presentViewController(alertController, animated: true, completion: nil)
+                } else {
+                    let alertController = UIAlertController(title: "Error", message: "Error Logging In: CHeck XCode comsol for more details",preferredStyle: .Alert)
+                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel) { (action) in
+                    }
+                    alertController.addAction(cancelAction)
+                    self.presentViewController(alertController, animated: true, completion: nil)
+                }
+                self.userNameField.text = ""
+                self.passwordField.text = ""
             }
         }
     }
@@ -48,8 +64,21 @@ class LoginViewController: UIViewController {
             } else {
                 print(error?.localizedDescription)
                 if error!.code == 202 {
-                    print("username already exists")
+                    let alertController = UIAlertController(title: "Error", message: "Username already exists",preferredStyle: .Alert)
+                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel) { (action) in
+                    }
+                    alertController.addAction(cancelAction)
+                    self.presentViewController(alertController, animated: true, completion: nil)
+                } else {
+                    let alertController = UIAlertController(title: "Error", message: "Error Sigining Up: Check XCode comsol for more details",preferredStyle: .Alert)
+                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel) { (action) in
+                    }
+                    alertController.addAction(cancelAction)
+                    self.presentViewController(alertController, animated: true, completion: nil)
+                    
                 }
+                self.userNameField.text = ""
+                self.passwordField.text = ""
             }
         }
     }

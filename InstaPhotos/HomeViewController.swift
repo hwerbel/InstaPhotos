@@ -21,18 +21,17 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.tableView.dataSource = self
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 300
-        
-        let tbvc = self.tabBarController! as! tabBarViewController
-        tbvc.profileUser = nil
         // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         UserMedia.getPosts(nil, completion: { (posts, error) -> () in
             self.posts = posts!
             self.tableView.reloadData()
         })
         self.tableView.reloadData()
+        (self.tabBarController! as! tabBarViewController).profileUser = PFUser.currentUser()!
     }
 
     override func didReceiveMemoryWarning() {
@@ -60,8 +59,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     
     func didTapProfile(user: PFUser?) {
-        let tbvc = self.tabBarController as! tabBarViewController
-        tbvc.profileUser = user
+        (self.tabBarController as! tabBarViewController).profileUser = user!
         self.tabBarController!.selectedIndex = 2
         
     }
