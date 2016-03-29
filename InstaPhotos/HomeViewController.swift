@@ -17,15 +17,17 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //Initialize TableView
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        //Auto Layout
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 300
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        //Show recent posts
         UserMedia.getPosts(nil, completion: { (posts, error) -> () in
             self.posts = posts!
             self.tableView.reloadData()
@@ -51,14 +53,18 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.post = posts![indexPath.row]
         
         let cell = tableView.dequeueReusableCellWithIdentifier("InstaCell", forIndexPath: indexPath) as! InstaCell
+        
+        //Set delegate for protocol
         cell.delegate = self
+        
         cell.post = posts![indexPath.row]
         cell.selectionStyle = .None
         return cell
     }
     
-    
+    //Tapped user info
     func didTapProfile(user: PFUser?) {
+        //Set profileUser for profile page to tapped user
         (self.tabBarController as! tabBarViewController).profileUser = user!
         self.tabBarController!.selectedIndex = 2
         

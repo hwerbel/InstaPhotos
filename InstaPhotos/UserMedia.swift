@@ -11,6 +11,7 @@ import Parse
 
 class UserMedia: NSObject {
     
+    //Upload profile picture
     class func postProfileImage(image: UIImage?) {
         let user = PFUser.currentUser()!
         user["profilePic"] = getPFFileFromImage(image)
@@ -25,16 +26,18 @@ class UserMedia: NSObject {
         }
     }
     
+    //Post uploaded image
     class func postUserImage(image: UIImage?, caption: String?) {
-        let media = PFObject(className: "userMedia")
-        media["media"] = getPFFileFromImage(image)
-        media["author"] = PFUser.currentUser()
-        media["username"] = PFUser.currentUser()!.username
-        media["caption"] = caption
-        media["likesCount"] = 0
-        media["commentsCount"] = 0
+        let userMedia = PFObject(className: "userMedia")
+        //Assign properties to userMedia class
+        userMedia["media"] = getPFFileFromImage(image)
+        userMedia["author"] = PFUser.currentUser()
+        userMedia["username"] = PFUser.currentUser()!.username
+        userMedia["caption"] = caption
+        userMedia["likesCount"] = 0
+        userMedia["commentsCount"] = 0
         
-        media.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+        userMedia.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
             if (success) {
                 print("successfully saved image")
             } else {
@@ -44,6 +47,7 @@ class UserMedia: NSObject {
         }
     }
     
+    //Convert image to storabl PFFile
     class func getPFFileFromImage(image: UIImage?) -> PFFile? {
         if let image = image {
             if let imageData = UIImagePNGRepresentation(image) {
@@ -55,22 +59,26 @@ class UserMedia: NSObject {
         return nil
     }
     
+    //Get recent posts to show in feed
     class func getPosts(predicate: String?, completion: (posts: [PFObject]?, error: NSError?) -> ()) {
         var query: PFQuery
+        //If query includes a predicate
         if predicate != nil {
             let predicate = NSPredicate(format: predicate!)
             query = PFQuery(className: "userMedia", predicate: predicate)
+        //If query does not include a predicate
         } else {
             query = PFQuery(className: "userMedia")
         }
+        //Include "author" key in query
         query.includeKey("author")
+        //List most recent posts first
         query.orderByDescending("_created_at")
         query.limit = 20
         
         query.findObjectsInBackgroundWithBlock{ (media: [PFObject]?, error: NSError?) -> Void in
             if let media = media {
                 completion(posts: media, error: nil)
-                
                 print("got media")
             } else {
                 completion(posts: nil, error: error)

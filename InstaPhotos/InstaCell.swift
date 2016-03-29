@@ -27,40 +27,38 @@ class InstaCell: UITableViewCell {
     
     var post: PFObject! {
         didSet {
+            //Fill labels with post info
             self.captionLabel.text = post["caption"] as? String
             self.photoImageView.file = post["media"] as? PFFile
             self.photoImageView.loadInBackground()
             self.usernameLabel.text = post["username"] as? String
             
             user = post["author"] as? PFUser
+            //If have profile picture
             if let imageFile = user!["profilePic"] as? PFFile {
                 self.profileImageView.file = imageFile
                 self.profileImageView.loadInBackground()
+            //If don't have profile picture use default picture
             } else {
                 self.profileImageView.backgroundColor = UIColor.whiteColor()
                 self.profileImageView.image = UIImage(named: "flower.png")
             } 
             
+            //Format created at date
             let createdAt = post.createdAt!
             let formatter = NSDateFormatter()
             formatter.dateStyle = NSDateFormatterStyle.MediumStyle
             formatter.timeStyle = .ShortStyle
             self.createdAtLabel.text = formatter.stringFromDate(createdAt)
             
-            
-            
         }
     }
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-        
         //Tap Gesture Recognizer
         profileTap.addTarget(self, action: Selector("onProfileTap:"))
         profileView.addGestureRecognizer(profileTap)
         profileView.userInteractionEnabled = true
-
-        //captionLabel.preferredMaxLayoutWidth = captionLabel.frame.size.width
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -69,7 +67,7 @@ class InstaCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    
+    //Profile image or user name tapped
     func onProfileTap(recognizer: UITapGestureRecognizer) {
         print("profile view tapped")
         self.delegate?.didTapProfile(user)

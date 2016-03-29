@@ -10,13 +10,13 @@ import UIKit
 import Parse
 
 class tabBarViewController: UITabBarController {
+    //Variable that can be accessed between tabs--used to control which user's profile to show on the profile page
     var profileUser = PFUser()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //Customize tabBar
         UITabBar.appearance().tintColor = UIColor.greenColor()
-
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {

@@ -25,19 +25,20 @@ class PhotosViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //Set up views
         initialView()
+        
         //Progress HUD
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("didSaveImage:"), name: "EndUpload", object: nil)
         
-        //Keyboard
+        //Monitor Keyboard
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardIsShowing:"), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
-        
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        //Set current user as profileUser
         (self.tabBarController! as! tabBarViewController).profileUser = PFUser.currentUser()!
     }
 
@@ -47,6 +48,7 @@ class PhotosViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     func initialView() {
+        //Visual layout
         previewImageView.image = nil
         previewImageView.hidden = true
         uploadView.alpha = 0.8
@@ -64,33 +66,47 @@ class PhotosViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     func textViewDidChange(textView: UITextView) {
         let charCount = textView.text.characters.count
+        
+        //Check character count to decide whether to hide caption placeholder label
         if charCount > 0 {
             self.captionLabel.hidden = true
         } else {
             self.captionLabel.hidden = false
         }
     }
-
+    
     func keyboardIsShowing(notification: NSNotification) {
         var keyboardInfo = notification.userInfo!
         let keyboardFrame: CGRect = (keyboardInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
         
+        //Move caption text field up when keyboard pops up
         UIView.animateWithDuration(0.1, animations: { () -> Void in
             self.captionViewBottomConstraint.constant = keyboardFrame.size.height - 50
         })
+        
+        //Dim background
         self.uploadView.alpha = 0.7
+        
+        //SHow done button
         doneButton.hidden = false
     }
     
     func keyboardWillHide(notification: NSNotification) {
+        //Move caption text field back down
         UIView.animateWithDuration(0.1, animations: { () -> Void in
             self.captionViewBottomConstraint.constant = 63
         })
+        
+        //Un-dim background
         self.uploadView.alpha = 1.0
+        
+        //Hide done button
         doneButton.hidden = true
     }
     
+    //Upload image tapped
     func onUploadTap(recognizer: UITapGestureRecognizer) {
+        //Open image picker
         let vc = UIImagePickerController()
         vc.delegate = self
         vc.allowsEditing = true
@@ -101,17 +117,24 @@ class PhotosViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     func imagePickerController(picker: UIImagePickerController,
         didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-            
+            //Get image from image picker
             let image = info[UIImagePickerControllerOriginalImage] as! UIImage
             self.imageToUpload = resize(image, newSize: CGSizeMake(750, 750))
+            
+            //Show image in preview image view
             self.previewImageView.image = self.imageToUpload
             self.previewImageView.hidden = false
             self.uploadLabel.hidden = true
             self.uploadView.alpha = 1
+            
+            //Dismiss image picker
             self.dismissViewControllerAnimated(true, completion: nil)
+            
+            //Remove tap gesture recognizer from upload view
             uploadView.removeGestureRecognizer(uploadTap)
     }
     
+    //Resize image to fit in Parse's limits
     func resize(image: UIImage, newSize: CGSize) -> UIImage {
         let resizeImageView = UIImageView(frame: CGRectMake(0, 0, newSize.width, newSize.height))
         resizeImageView.contentMode = UIViewContentMode.ScaleAspectFill
@@ -125,23 +148,35 @@ class PhotosViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     @IBAction func onDone(sender: AnyObject) {
+        //End editing of caption
         self.captionTextView.endEditing(true)
     }
     
     @IBAction func onSubmit(sender: AnyObject) {
+        //Customize loading indicator
         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         hud.labelText = "Loading Image"
+        
+        //Upload image
         UserMedia.postUserImage(self.imageToUpload!, caption: captionTextView.text!)
     }
     
     @IBAction func onCancel(sender: AnyObject) {
+        //Return to initial views
         initialView()
+        
+        //Return to home page
         self.tabBarController!.selectedIndex = 0
     }
     
     func didSaveImage(notification: NSNotification) {
+        //Stop loading indicator
         MBProgressHUD.hideHUDForView(self.view, animated: true)
+        
+        //Return to initial views
         initialView()
+        
+        //Return to home page
         self.tabBarController!.selectedIndex = 0
         
     }

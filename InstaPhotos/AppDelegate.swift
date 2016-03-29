@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        //Initialize Parse
         Parse.initializeWithConfiguration(
             ParseClientConfiguration(block:
                 { (configuration:ParseMutableClientConfiguration) -> Void in
@@ -30,6 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+    //Logout Function
     func userDidLogout() {
         let vc = storyboard.instantiateInitialViewController() as UIViewController!
         window?.rootViewController = vc

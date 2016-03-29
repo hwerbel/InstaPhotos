@@ -26,35 +26,43 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        //Watch for end of profile image upload
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("didEndUpload:"), name: "EndProfileUpload", object: nil)
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
+        //Get user's profile to show
         user = (self.tabBarController as! tabBarViewController).profileUser
+        
+        //Disable current user features if profile does not belong to current user
         if user!.username != PFUser.currentUser()!.username {
             updateButton.hidden = true
             logoutButton.hidden = true
+        //Show current user features if profile does belong to current user
         } else {
             updateButton.hidden = false
             logoutButton.hidden = false
         }
+        
+        //Set user name
         userNameLabel.text = user!.username
+        
+        //Format createdAt
         let createdAt = user!.createdAt!
         let formatter = NSDateFormatter()
         formatter.dateStyle = NSDateFormatterStyle.MediumStyle
         formatter.timeStyle = .ShortStyle
         self.createdAtLabel.text = formatter.stringFromDate(createdAt)
+        
+        //If user has a profile picture
         if let imageFile = user!["profilePic"] as? PFFile {
             self.profileImageView.file = imageFile
             self.profileImageView.loadInBackground()
+        //If user does not have a profile picture, use default
         } else {
             self.profileImageView.image = UIImage(named: "flower.png")
         }
-
     }
 
     override func didReceiveMemoryWarning() {
@@ -63,6 +71,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     @IBAction func onUpdateProfilePic(sender: AnyObject) {
+        //Display image picker
         let vc = UIImagePickerController()
         vc.delegate = self
         vc.allowsEditing = true
@@ -73,22 +82,32 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     func imagePickerController(picker: UIImagePickerController,
         didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-            
+            //Get image from image picker and upload
             let image = info[UIImagePickerControllerOriginalImage] as! UIImage
             self.imageToUpload = resize(image, newSize: CGSizeMake(750, 750))
             self.profileImageView.image = self.imageToUpload
+            
+            //Dismiss image picker
             self.dismissViewControllerAnimated(true, completion: nil)
+            
+            //Dim background while uploading
             self.profileView.alpha = 0.7
+            
+            //Customize loading indicator
             let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
             hud.labelText = "Updating"
             UserMedia.postProfileImage(self.imageToUpload)
     }
     
     func didEndUpload(notification: NSNotification) {
+        //Stop loading indicator
         MBProgressHUD.hideHUDForView(self.view, animated: true)
+        
+        //Brighten background to normal state
         self.profileView.alpha = 1
     }
     
+    //Resize image to fit Parse limits
     func resize(image: UIImage, newSize: CGSize) -> UIImage {
         let resizeImageView = UIImageView(frame: CGRectMake(0, 0, newSize.width, newSize.height))
         resizeImageView.contentMode = UIViewContentMode.ScaleAspectFill
@@ -102,6 +121,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     @IBAction func onLogout(sender: AnyObject) {
+        //Log user out
         PFUser.logOut()
         print(PFUser.currentUser())
         NSNotificationCenter.defaultCenter().postNotificationName("userDidLogoutNotification", object: nil)
